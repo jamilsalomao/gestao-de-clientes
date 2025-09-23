@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "gestao-de-clientes",
+    "scheme": "your-app-scheme",
     "slug": "gestao-de-clientes",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -24,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
