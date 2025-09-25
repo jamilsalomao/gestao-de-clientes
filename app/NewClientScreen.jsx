@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import {
     View, Text, TextInput, TouchableOpacity,
   StyleSheet, ScrollView, StatusBar, Platform
@@ -62,12 +62,12 @@ const NewClientScreen = () => {
           </View>
 
           <View style={styles.buttonContainer}>
-            <TouchableOpacity 
+            {/* <TouchableOpacity 
               style={[styles.button, styles.secondaryButton]}
               onPress={() => router.back()}
             >
               <Text style={styles.secondaryButtonText}>Voltar</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Salvar</Text>
