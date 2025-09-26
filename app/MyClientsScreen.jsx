@@ -7,62 +7,25 @@ import {
   FlatList,
   StatusBar,
 } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SimpleBarChart from "../src/components/SimpleBarChart";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useClients } from "../src/context/ClientContext";
+import ClientDetailModal from "../src/components/Modal";
 
-const DADOS_EXEMPLO = [
-  {
-    id: "1",
-    nome: "Maria Oliveira",
-    servico: "Reforma de Cozinha",
-    status: "ativo",
-    data: "17/08/2025",
-    statusDesc: "Projeto enviado para aprovação",
-  },
-  {
-    id: "2",
-    nome: "Carlos Souza",
-    servico: "Instalação Elétrica",
-    status: "ativo",
-    data: "16/08/2025",
-    statusDesc: "Aguardando material",
-  },
-  {
-    id: "3",
-    nome: "Ana Costa",
-    servico: "Pintura de Fachada",
-    status: "concluido",
-    data: "10/08/2025",
-    statusDesc: "Finalizado com sucesso",
-  },
-  {
-    id: "4",
-    nome: "Pedro Martins",
-    servico: "Marcenaria Completa",
-    status: "ativo",
-    data: "15/08/2025",
-    statusDesc: "Em andamento",
-  },
-  {
-    id: "5",
-    nome: "Juliana Lima",
-    servico: "Consultoria de Design",
-    status: "concluido",
-    data: "05/08/2025",
-    statusDesc: "Pagamento recebido",
-  },
-];
 
 const MyClientsScreen = () => {
+  const { clients } = useClients();
   const [activeTab, setActiveTab] = useState("ativos");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedClientId, setSelectedClientId] = useState(null);
 
   const { ativos, concluidos, total } = useMemo(() => {
-    const ativosCount = DADOS_EXEMPLO.filter(
+    const ativosCount = clients.filter(
       (c) => c.status === "ativo"
     ).length;
-    const concluidosCount = DADOS_EXEMPLO.filter(
+    const concluidosCount = clients.filter(
       (c) => c.status === "concluido"
     ).length;
     return {
@@ -70,20 +33,33 @@ const MyClientsScreen = () => {
       concluidos: concluidosCount,
       total: ativosCount + concluidosCount,
     };
-  }, []);
+  }, [clients]);
 
-  const filteredClients = DADOS_EXEMPLO.filter((client) =>
+  const filteredClients = clients.filter((client) =>
     activeTab === "ativos"
       ? client.status === "ativo"
       : client.status === "concluido"
   );
 
+  const handleOpenModal = (client) => {
+    setSelectedClientId(client);
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+    setSelectedClientId(null);
+  };
+
   const renderClientCard = ({ item }) => {
-    const borderColor = item.status === "ativo" ? "#4F46E5" : "#10B981";
+    const color = item.status === "ativo" ? "#4F46E5" : "#10B981";
+
+    const statusIcon = item.status === 'ativo' ? 'send-circle-outline' : 'check-circle-outline';
 
     return (
+    <TouchableOpacity onPress={() => handleOpenModal(item.id)}>
       <View style={styles.card}>
-        <View style={[styles.cardBorder, { backgroundColor: borderColor }]} />
+        <View style={[styles.cardBorder, { backgroundColor: color }]} />
         <View style={styles.cardContent}>
           <View style={styles.cardHeader}>
             <Text style={styles.clientName}>{item.nome}</Text>
@@ -92,14 +68,15 @@ const MyClientsScreen = () => {
           <Text style={styles.serviceName}>{item.servico}</Text>
           <View style={styles.statusContainer}>
             <MaterialCommunityIcons
-              name="send-circle-outline"
+              name={statusIcon}
               size={16}
-              color="#4B5563"
+              color={color}
             />
-            <Text style={styles.statusText}>{item.statusDesc}</Text>
+            <Text style={styles.statusText}>{item.timeline[0].description}</Text>
           </View>
         </View>
       </View>
+    </TouchableOpacity>  
     );
   };
 
@@ -113,6 +90,13 @@ const MyClientsScreen = () => {
         }}
       />
       <StatusBar barStyle="dark-content" />
+
+      <ClientDetailModal 
+        visible={isModalVisible}
+        onClose={handleCloseModal}
+        clientId={selectedClientId}
+      />
+
       <FlatList
         data={filteredClients}
         renderItem={renderClientCard}

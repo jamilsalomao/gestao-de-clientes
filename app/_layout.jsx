@@ -1,8 +1,10 @@
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { ClientsProvider } from "../src/context/ClientContext";
 
 export default function RootLayout() {
   return (
+    <ClientsProvider>
     <SafeAreaProvider>
       <Stack>
         <Stack.Screen
@@ -22,7 +24,7 @@ export default function RootLayout() {
         />
         
         <Stack.Screen
-          name="myClientsScreen" 
+          name="MyClientsScreen" 
           options={{
             title: "Meus Clientes", 
             headerBackTitleVisible: false, 
@@ -30,5 +32,6 @@ export default function RootLayout() {
         />
       </Stack>
     </SafeAreaProvider>
+    </ClientsProvider>
   );
 }
