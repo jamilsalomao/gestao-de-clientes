@@ -3,15 +3,15 @@ import {
     View, Text, TextInput, TouchableOpacity,
   StyleSheet, ScrollView, StatusBar, Platform
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router'; // 1. Importar o useRouter
+import { Stack, useRouter } from 'expo-router'; 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const NewClientScreen = () => {
-  const router = useRouter(); // 2. Inicializar o router
+  const router = useRouter(); 
 
-  // ... (todo o resto do seu código e estados permanecem iguais)
+
   const [date, setDate] = useState(null);
   const [showPicker, setShowPicker] = useState(false);
   const toggleDatePicker = () => setShowPicker(true);
@@ -40,7 +40,6 @@ const NewClientScreen = () => {
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.formContainer}>
-          {/* ... (todos os seus inputs) ... */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Nome do cliente</Text>
             <TextInput style={styles.input} placeholder="Ex: João da Silva" placeholderTextColor="#9CA3AF" />
@@ -62,13 +61,6 @@ const NewClientScreen = () => {
           </View>
 
           <View style={styles.buttonContainer}>
-            {/* <TouchableOpacity 
-              style={[styles.button, styles.secondaryButton]}
-              onPress={() => router.back()}
-            >
-              <Text style={styles.secondaryButtonText}>Voltar</Text>
-            </TouchableOpacity> */}
-
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Salvar</Text>
             </TouchableOpacity>
@@ -79,9 +71,7 @@ const NewClientScreen = () => {
   );
 };
 
-// Adicione estes novos estilos ao seu StyleSheet.create({...})
 const styles = StyleSheet.create({
-  // ... (todos os seus estilos antigos)
   button: {
     backgroundColor: '#6366F1',
     paddingVertical: 15,
@@ -94,23 +84,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
-  // NOVOS ESTILOS
   buttonContainer: {
     flexDirection: 'row',
     marginTop: 10,
-    gap: 10, // Espaçamento entre os botões
+    gap: 10, 
   },
   secondaryButton: {
-    backgroundColor: '#F3F4F6', // Cor de fundo diferente
+    backgroundColor: '#F3F4F6', 
     borderWidth: 1,
     borderColor: '#D1D5DB',
   },
   secondaryButtonText: {
-    color: '#4B5563', // Cor de texto diferente
+    color: '#4B5563', 
     fontSize: 16,
     fontWeight: 'bold',
   },
-  // ... (resto dos estilos)
   container: { flex: 1, backgroundColor: '#F3F4F6' },
   scrollContainer: { padding: 20 },
   formContainer: { backgroundColor: '#FFFFFF', borderRadius: 16, padding: 25, shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 5, elevation: 5 },

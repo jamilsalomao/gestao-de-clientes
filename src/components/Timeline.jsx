@@ -6,14 +6,12 @@ const TimelineItem = ({ item, isLast }) => {
     <View style={styles.itemContainer}>
       <View style={styles.iconContainer}>
         <View style={styles.iconCircle}>
-            {/* Usamos um ícone diferente para o primeiro item da lista */}
             <MaterialCommunityIcons 
                 name={item.icon || "circle-medium"} 
                 size={20} 
                 color="#FFFFFF" 
             />
         </View>
-        {/* A linha vertical que conecta os pontos, não mostra no último item */}
         {!isLast && <View style={styles.verticalLine} />}
       </View>
       <View style={styles.detailsContainer}>
@@ -43,7 +41,7 @@ const styles = StyleSheet.create({
     width: 32, height: 32, borderRadius: 16,
     backgroundColor: '#4F46E5',
     justifyContent: 'center', alignItems: 'center',
-    zIndex: 1, // Garante que o círculo fique sobre a linha
+    zIndex: 1, 
   },
   verticalLine: {
     position: 'absolute', top: 16,

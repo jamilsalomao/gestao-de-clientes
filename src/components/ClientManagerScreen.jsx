@@ -55,7 +55,7 @@ const ClientManagerScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F3F4F6", // Cor de fundo cinza claro
+    backgroundColor: "#F3F4F6", 
     justifyContent: "center",
     alignItems: "center",
   },
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#6366F1", // Azul/Roxo principal
+    backgroundColor: "#6366F1", 
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 12,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#374151", // Cinza escuro
+    backgroundColor: "#374151", 
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 12,

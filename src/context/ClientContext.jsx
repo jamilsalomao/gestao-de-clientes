@@ -111,7 +111,6 @@ export const ClientsProvider = ({ children }) => {
   );
 };
 
-// Hook customizado para usar o contexto facilmente
 export const useClients = () => {
   return useContext(ClientsContext);
 };

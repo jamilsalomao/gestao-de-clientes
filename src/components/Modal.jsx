@@ -33,11 +33,11 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
 
   const handleMarkAsCompleted = () => {
     markAsCompleted(clientId);
-    onClose(); // Fecha o modal
+    onClose();
   };
 
   if (!client) {
-    return null; // Não renderiza nada se não houver cliente
+    return null; 
   }
 
   return (
@@ -84,7 +84,6 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
   );
 };
 
-// ... (copie os estilos do modal da resposta anterior aqui)
 const styles = StyleSheet.create({
     modalContainer: { flex: 1, backgroundColor: '#F9FAFB' },
     modalHeader: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 15, borderBottomWidth: 1, borderBottomColor: '#E5E7EB' },
