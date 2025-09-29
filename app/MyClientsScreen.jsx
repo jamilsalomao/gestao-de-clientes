@@ -6,6 +6,7 @@ import {
   StyleSheet,
   FlatList,
   StatusBar,
+  TextInput,
 } from "react-native";
 import { Stack, Link } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -14,17 +15,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useClients } from "../src/context/ClientContext";
 import ClientDetailModal from "../src/components/Modal";
 
-
 const MyClientsScreen = () => {
   const { clients } = useClients();
   const [activeTab, setActiveTab] = useState("ativos");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const { ativos, concluidos, total } = useMemo(() => {
-    const ativosCount = clients.filter(
-      (c) => c.status === "ativo"
-    ).length;
+    const ativosCount = clients.filter((c) => c.status === "ativo").length;
     const concluidosCount = clients.filter(
       (c) => c.status === "concluido"
     ).length;
@@ -35,11 +34,21 @@ const MyClientsScreen = () => {
     };
   }, [clients]);
 
-  const filteredClients = clients.filter((client) =>
-    activeTab === "ativos"
-      ? client.status === "ativo"
-      : client.status === "concluido"
-  );
+  const filteredClients = useMemo(() => {
+    const clientsByTab = clients.filter((client) =>
+      activeTab === "ativos"
+        ? client.status === "ativo"
+        : client.status === "concluido"
+    );
+
+    if (!searchQuery) {
+      return clientsByTab;
+    }
+
+    return clientsByTab.filter((client) =>
+      client.nome.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }, [clients, activeTab, searchQuery]);
 
   const handleOpenModal = (client) => {
     setSelectedClientId(client);
@@ -53,32 +62,40 @@ const MyClientsScreen = () => {
 
   const renderClientCard = ({ item }) => {
     const color = item.status === "ativo" ? "#4F46E5" : "#10B981";
-
-    const statusIcon = item.status === 'ativo' ? 'send-circle-outline' : 'check-circle-outline';
+    const statusIcon =
+      item.status === "ativo" ? "send-circle-outline" : "check-circle-outline";
 
     return (
-    <TouchableOpacity onPress={() => handleOpenModal(item.id)}>
-      <View style={styles.card}>
-        <View style={[styles.cardBorder, { backgroundColor: color }]} />
-        <View style={styles.cardContent}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.clientName}>{item.nome}</Text>
-            <Text style={styles.clientDate}>{item.data}</Text>
-          </View>
-          <Text style={styles.serviceName}>{item.servico}</Text>
-          <View style={styles.statusContainer}>
-            <MaterialCommunityIcons
-              name={statusIcon}
-              size={16}
-              color={color}
-            />
-            <Text style={styles.statusText}>{item.timeline[0].description}</Text>
+      <TouchableOpacity onPress={() => handleOpenModal(item.id)}>
+        <View style={styles.card}>
+          <View style={[styles.cardBorder, { backgroundColor: color }]} />
+          <View style={styles.cardContent}>
+            <View style={styles.cardHeader}>
+              <Text style={styles.clientName}>{item.nome}</Text>
+              <Text style={styles.clientDate}>{item.data}</Text>
+            </View>
+            <Text style={styles.serviceName}>{item.servico}</Text>
+            <View style={styles.statusContainer}>
+              <MaterialCommunityIcons
+                name={statusIcon}
+                size={16}
+                color={color}
+              />
+              <Text style={styles.statusText}>
+                {item.timeline[0].description}
+              </Text>
+            </View>
           </View>
         </View>
-      </View>
-    </TouchableOpacity>  
+      </TouchableOpacity>
     );
   };
+
+  const EmptyListComponent = () => (
+    <View style={styles.emptyContainer}>
+      <Text style={styles.emptyText}>Nenhum serviço encontrado com esse nome.</Text>
+    </View>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -91,7 +108,7 @@ const MyClientsScreen = () => {
       />
       <StatusBar barStyle="dark-content" />
 
-      <ClientDetailModal 
+      <ClientDetailModal
         visible={isModalVisible}
         onClose={handleCloseModal}
         clientId={selectedClientId}
@@ -101,6 +118,7 @@ const MyClientsScreen = () => {
         data={filteredClients}
         renderItem={renderClientCard}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={EmptyListComponent}
         ListHeaderComponent={
           <>
             <View style={styles.tabsContainer}>
@@ -158,6 +176,23 @@ const MyClientsScreen = () => {
                   <Text style={styles.legendText}>Concluídos</Text>
                 </View>
               </View>
+
+              <View style={styles.searchContainer}>
+                <MaterialCommunityIcons
+                  name="magnify"
+                  size={22}
+                  color="#9CA3AF"
+                  style={styles.searchIcon}
+                />
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Pesquisar por nome..."
+                  placeholderTextColor="#9CA3AF"
+                  contentContainerStyle={{ flexGrow: 1 }}
+                  value={searchQuery}
+                  onChangeText={setSearchQuery}
+                />
+              </View>
             </View>
           </>
         }
@@ -167,12 +202,44 @@ const MyClientsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: "#6B7280",
+    fontWeight: "500",
+  },
+  searchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 10,
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 50,
+    fontSize: 16,
+    color: "#1F2937",
+  },
   container: { flex: 1, backgroundColor: "#F9FAFB" },
   tabsContainer: {
     flexDirection: "row",
     backgroundColor: "#E5E7EB",
     marginHorizontal: 20,
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 12,
     padding: 4,
   },
@@ -189,7 +256,7 @@ const styles = StyleSheet.create({
   activeTabText: { color: "#1F2937" },
   chartContainer: {
     alignItems: "center",
-    marginVertical: 20,
+    marginVertical: 15,
     paddingVertical: 20,
     backgroundColor: "#FFFFFF",
     marginHorizontal: 20,
