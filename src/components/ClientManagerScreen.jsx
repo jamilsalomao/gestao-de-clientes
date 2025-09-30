@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StatusBar,
-  StyleSheet,
-} from "react-native";
+import {View, Text, TouchableOpacity, StatusBar, StyleSheet,} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
@@ -16,7 +10,7 @@ const ClientManagerScreen = () => {
       <View style={styles.card}>
         <MaterialCommunityIcons
           name="format-list-checks"
-          size={50}
+          size={75}
           color="#6366F1"
         />
 

@@ -73,6 +73,31 @@ const ClientsContext = createContext();
 export const ClientsProvider = ({ children }) => {
   const [clients, setClients] = useState(DADOS_EXEMPLO_INICIAL);
 
+    const addClient = (newClientData) => {
+    const selectedDate = newClientData.date;
+    const formattedCardDate = selectedDate.toLocaleDateString('pt-BR'); 
+    const formattedTimelineDate = selectedDate.toLocaleDateString('pt-BR', { 
+      day: 'numeric', month: 'long', year: 'numeric' 
+    }); 
+
+    const newClient = {
+      id: Math.random().toString(36).substr(2, 9),
+      nome: newClientData.nome,
+      servico: newClientData.servico,
+      status: 'ativo',
+      data: formattedCardDate, 
+      timeline: [
+        {
+          date: formattedTimelineDate, 
+          description: newClientData.statusInicial,
+          icon: 'flag-checkered', 
+        },
+      ],
+    };
+
+    setClients(currentClients => [newClient, ...currentClients]);
+  };
+
   const getClientById = (id) => {
     return clients.find(client => client.id === id);
   };
@@ -105,7 +130,7 @@ export const ClientsProvider = ({ children }) => {
   };
 
   return (
-    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted }}>
+    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted, addClient }}>
       {children}
     </ClientsContext.Provider>
   );
