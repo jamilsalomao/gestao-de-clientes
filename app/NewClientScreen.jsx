@@ -220,7 +220,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iosButtonConfirm: {
-    backgroundColor: '#4F46E5',
+    backgroundColor: '#B84500',
   },
   iosButtonText: {
     color: '#1F2937',
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    backgroundColor: "#6366F1",
+    backgroundColor: "#DB7105",
     paddingVertical: 15,
     borderRadius: 12,
     alignItems: "center",

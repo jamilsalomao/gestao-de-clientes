@@ -92,9 +92,9 @@ const styles = StyleSheet.create({
     timelineTitle: { fontSize: 16, fontWeight: '600', color: '#374151', marginBottom: 20 },
     timelineWrapper: { backgroundColor: '#FFFFFF', padding: 20, borderRadius: 12, marginBottom: 20, flex: 1 },
     input: { backgroundColor: '#FFFFFF', borderWidth: 1, borderColor: '#D1D5DB', borderRadius: 12, paddingHorizontal: 15, paddingVertical: 12, minHeight: 80, textAlignVertical: 'top', fontSize: 16, marginBottom: 15 },
-    primaryButton: { backgroundColor: '#4F46E5', padding: 15, borderRadius: 12, alignItems: 'center', marginBottom: 10 },
+    primaryButton: { backgroundColor: '#DB7105', padding: 15, borderRadius: 12, alignItems: 'center', marginBottom: 10 },
     primaryButtonText: { color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 },
-    secondaryButton: { backgroundColor: '#10B981', padding: 15, borderRadius: 12, alignItems: 'center' },
+    secondaryButton: { backgroundColor: '#0E2C40', padding: 15, borderRadius: 12, alignItems: 'center' },
     secondaryButtonText: { color: '#FFFFFF', fontWeight: 'bold', fontSize: 16 },
 });
 

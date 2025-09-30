@@ -61,7 +61,7 @@ const MyClientsScreen = () => {
   };
 
   const renderClientCard = ({ item }) => {
-    const color = item.status === "ativo" ? "#4F46E5" : "#10B981";
+    const color = item.status === "ativo" ? "#DB7105" : "#0E2C40";
     const statusIcon =
       item.status === "ativo" ? "send-circle-outline" : "check-circle-outline";
 
@@ -165,13 +165,13 @@ const MyClientsScreen = () => {
               <View style={styles.legendContainer}>
                 <View style={styles.legendItem}>
                   <View
-                    style={[styles.legendColor, { backgroundColor: "#4F46E5" }]}
+                    style={[styles.legendColor, { backgroundColor: "#DB7105" }]}
                   />
                   <Text style={styles.legendText}>Ativos</Text>
                 </View>
                 <View style={styles.legendItem}>
                   <View
-                    style={[styles.legendColor, { backgroundColor: "#10B981" }]}
+                    style={[styles.legendColor, { backgroundColor: "#0E2C40" }]}
                   />
                   <Text style={styles.legendText}>Concluídos</Text>
                 </View>

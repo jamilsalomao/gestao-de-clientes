@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, StatusBar, StyleSheet,} from "react-native";
+import {View, Text, TouchableOpacity, StatusBar, StyleSheet, Image} from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Link } from "expo-router";
@@ -8,15 +8,20 @@ const ClientManagerScreen = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F3F4F6" />
       <View style={styles.card}>
-        <MaterialCommunityIcons
+        {/* <MaterialCommunityIcons
           name="format-list-checks"
           size={75}
           color="#6366F1"
+        /> */}
+
+        <Image
+        source={require('../../assets/FenixLogo.png')}
+        style={{ width: 200, height: 200,}}
         />
 
         <Text style={styles.title}>Gestor de Clientes</Text>
 
-        <Text style={styles.subtitle}>Seu assistente de serviços.</Text>
+        <Text style={styles.subtitle}>Seu assistente de serviços</Text>
 
         <Link href={"/NewClientScreen"} style={{ width: "100%" }} asChild>
           <TouchableOpacity style={styles.primaryButton}>
@@ -73,7 +78,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#1F2937",
+    color: "#0E2C40",
     marginTop: 20,
     textAlign: "center",
   },
@@ -88,7 +93,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#6366F1", 
+    backgroundColor: "#DB7105", 
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 12,
@@ -104,7 +109,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#374151", 
+    backgroundColor: "#0E2C40", 
     paddingVertical: 15,
     paddingHorizontal: 20,
     borderRadius: 12,

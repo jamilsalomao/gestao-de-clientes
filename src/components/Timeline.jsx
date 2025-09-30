@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   iconContainer: { alignItems: 'center', marginRight: 15 },
   iconCircle: {
     width: 32, height: 32, borderRadius: 16,
-    backgroundColor: '#4F46E5',
+    backgroundColor: '#DB7105',
     justifyContent: 'center', alignItems: 'center',
     zIndex: 1, 
   },
@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#E5E7EB',
   },
   detailsContainer: { flex: 1, paddingTop: 6 },
-  itemDate: { color: '#4F46E5', fontWeight: 'bold', fontSize: 14, marginBottom: 2 },
-  itemDescription: { color: '#4B5563', fontSize: 14 },
+  itemDate: { color: '#0E2C40', fontWeight: 'bold', fontSize: 14, marginBottom: 2 },
+  itemDescription: { color: '#7a8798ff', fontSize: 14 },
 });
 
 export default Timeline;

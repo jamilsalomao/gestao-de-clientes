@@ -10,8 +10,8 @@ const SimpleBarChart = ({ activeValue = 0, completedValue = 0 }) => {
   return (
     <View style={styles.container}>
       <View style={styles.bar}>
-        <View style={{ flex: activeValue, backgroundColor: '#4F46E5', borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
-        <View style={{ flex: completedValue, backgroundColor: '#10B981', borderTopRightRadius: 8, borderBottomRightRadius: 8 }} />
+        <View style={{ flex: activeValue, backgroundColor: '#DB7105', borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }} />
+        <View style={{ flex: completedValue, backgroundColor: '#0E2C40', borderTopRightRadius: 8, borderBottomRightRadius: 8 }} />
       </View>
     </View>
   );
