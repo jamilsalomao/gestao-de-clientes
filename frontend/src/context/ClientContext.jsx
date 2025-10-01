@@ -129,8 +129,14 @@ export const ClientsProvider = ({ children }) => {
     );
   };
 
+    const deleteClient = (clientId) => {
+    setClients(currentClients =>
+      currentClients.filter(client => client.id !== clientId)
+    );
+  };
+
   return (
-    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted, addClient }}>
+    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted, addClient, deleteClient }}>
       {children}
     </ClientsContext.Provider>
   );
