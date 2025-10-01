@@ -11,10 +11,10 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "8.4.4",
     "babel-preset-expo": "^54.0.3",
-    "expo": "~54.0.10",
+    "expo": "^54.0.11",
     "expo-constants": "~18.0.9",
     "expo-linking": "~8.0.8",
-    "expo-router": "~6.0.8",
+    "expo-router": "^6.0.9",
     "expo-status-bar": "~3.0.8",
     "prettier-plugin-tailwindcss": "^0.5.14",
     "react": "^19.1.0",
