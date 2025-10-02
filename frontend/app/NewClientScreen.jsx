@@ -6,6 +6,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useClients } from '../src/context/ClientContext';
 import Toast from 'react-native-toast-message';
+import * as Haptics from 'expo-haptics';
 
 const NewClientScreen = () => {
   const router = useRouter();
@@ -24,6 +25,7 @@ const NewClientScreen = () => {
         text1: 'Campos Incompletos',
         text2: 'Por favor, preencha todos os campos.'
       });
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
       return;
     }
     addClient({
@@ -38,6 +40,7 @@ const NewClientScreen = () => {
       text1: 'Cliente Salvo!',
       text2: `${nome} foi adicionado à sua lista.`
     });
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
 
     router.back();
   };

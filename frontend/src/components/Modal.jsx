@@ -13,6 +13,7 @@ import { useClients } from "../../src/context/ClientContext";
 import Timeline from "./Timeline";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Toast from 'react-native-toast-message';
+import * as Haptics from 'expo-haptics';
 
 const ClientDetailModal = ({ visible, onClose, clientId }) => {
   const { getClientById, addTimelineUpdate, markAsCompleted, deleteClient } = useClients();
@@ -42,6 +43,7 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
               type: 'success',
               text1: 'Serviço Excluído'
             });
+            Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
             onClose();
           },
           style: "destructive",
@@ -53,6 +55,7 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
   const handleAddUpdate = () => {
     if (!newUpdateText.trim()) {
       Toast.show({ type: 'error', text1: 'Escreva uma atualização.' });
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       return;
     }
     addTimelineUpdate(clientId, newUpdateText.trim());
@@ -70,6 +73,7 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
       type: 'success',
       text1: 'Serviço Concluído!'
     });
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
     onClose();
   };
 

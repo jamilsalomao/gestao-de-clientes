@@ -41,7 +41,7 @@ const DADOS_EXEMPLO_INICIAL = [
   },
   {
     id: "4",
-    nome: "Padaria AguaDoce",
+    nome: "Padaria Agua Doce",
     servico: "Marcenaria Completa",
     status: "ativo",
     data: "15/08/2025",
