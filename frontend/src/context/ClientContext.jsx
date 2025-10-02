@@ -3,8 +3,8 @@ import { createContext, useState, useContext } from 'react';
 const DADOS_EXEMPLO_INICIAL = [
   { 
       id: '1', 
-      nome: 'Maria Oliveira', 
-      servico: 'Reforma de Cozinha', 
+      nome: 'Google', 
+      servico: 'Reforma na sede da empresa', 
       status: 'ativo', 
       data: '17/08/2025', 
       timeline: [
@@ -41,7 +41,7 @@ const DADOS_EXEMPLO_INICIAL = [
   },
   {
     id: "4",
-    nome: "Pedro Martins",
+    nome: "Padaria AguaDoce",
     servico: "Marcenaria Completa",
     status: "ativo",
     data: "15/08/2025",
