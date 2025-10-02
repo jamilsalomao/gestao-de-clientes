@@ -8,7 +8,7 @@ import {
   StatusBar,
   TextInput,
 } from "react-native";
-import { Stack, Link } from "expo-router";
+import { Stack } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import SimpleBarChart from "../src/components/SimpleBarChart";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -152,11 +152,24 @@ const MyClientsScreen = () => {
                 </Text>
               </TouchableOpacity>
             </View>
+
+            
+
             <View style={styles.chartContainer}>
-              <View style={styles.totalContainer}>
-                <Text style={styles.totalValue}>{total}</Text>
-                <Text style={styles.totalLabel}>Total de Clientes</Text>
+              <View style={styles.metricsContainer}>
+              <View style={styles.metricBox}>
+                <Text style={styles.metricValue}>{ativos}</Text>
+                <Text style={styles.metricLabel}>Ativos</Text>
               </View>
+              <View style={styles.metricBox}>
+                <Text style={styles.metricValue}>{concluidos}</Text>
+                <Text style={styles.metricLabel}>Concluídos</Text>
+              </View>
+              <View style={styles.metricBox}>
+                <Text style={styles.metricValue}>{total}</Text>
+                <Text style={styles.metricLabel}>Total</Text>
+              </View>
+            </View>
 
               <SimpleBarChart
                 activeValue={ativos}
@@ -244,6 +257,38 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   tab: { flex: 1, paddingVertical: 10, borderRadius: 8, alignItems: "center" },
+
+    metricsContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginHorizontal: 20,
+      marginTop: 10,
+      marginBottom: 15,
+      gap: 10,
+    },
+    metricBox: {
+      flex: 1,
+      backgroundColor: '#FFFFFF',
+      padding: 15,
+      borderRadius: 12,
+      alignItems: 'center',
+      shadowColor: '#171717',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.05,
+      shadowRadius: 4,
+      elevation: 2,
+    },
+    metricValue: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#1F2937',
+    },
+    metricLabel: {
+      fontSize: 12,
+      color: '#6B7280',
+      marginTop: 2,
+    },
+
   activeTab: {
     backgroundColor: "#FFFFFF",
     shadowColor: "#000",
@@ -266,20 +311,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 6,
     elevation: 5,
-  },
-  totalContainer: {
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  totalValue: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: "#1F2937",
-  },
-  totalLabel: {
-    fontSize: 14,
-    color: "#6B7280",
-    marginTop: -4,
   },
   legendContainer: {
     flexDirection: "row",
