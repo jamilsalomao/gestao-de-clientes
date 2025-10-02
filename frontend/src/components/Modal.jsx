@@ -12,6 +12,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useClients } from "../../src/context/ClientContext";
 import Timeline from "./Timeline";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import Toast from 'react-native-toast-message';
 
 const ClientDetailModal = ({ visible, onClose, clientId }) => {
   const { getClientById, addTimelineUpdate, markAsCompleted, deleteClient } = useClients();
@@ -37,6 +38,10 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
           text: "Excluir",
           onPress: () => {
             deleteClient(clientId);
+            Toast.show({
+              type: 'success',
+              text1: 'Serviço Excluído'
+            });
             onClose();
           },
           style: "destructive",
@@ -47,16 +52,24 @@ const ClientDetailModal = ({ visible, onClose, clientId }) => {
 
   const handleAddUpdate = () => {
     if (!newUpdateText.trim()) {
-      Alert.alert("Atenção", "Por favor, escreva uma atualização.");
+      Toast.show({ type: 'error', text1: 'Escreva uma atualização.' });
       return;
     }
     addTimelineUpdate(clientId, newUpdateText.trim());
+    Toast.show({ 
+      type: 'success',
+      text1: 'Atualização Salva!'
+    });
     onClose();
     setNewUpdateText("");
   };
 
   const handleMarkAsCompleted = () => {
     markAsCompleted(clientId);
+    Toast.show({ 
+      type: 'success',
+      text1: 'Serviço Concluído!'
+    });
     onClose();
   };
 

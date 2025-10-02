@@ -1,10 +1,11 @@
 import { useState } from "react";
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, StatusBar, Platform, Modal, Alert} from "react-native";
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, StatusBar, Platform, Modal,} from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useClients } from '../src/context/ClientContext';
+import Toast from 'react-native-toast-message';
 
 const NewClientScreen = () => {
   const router = useRouter();
@@ -18,7 +19,11 @@ const NewClientScreen = () => {
 
   const handleSave = () => {
     if (!nome.trim() || !servico.trim() || !date || !statusInicial.trim()) {
-      Alert.alert('Campos Incompletos', 'Por favor, preencha todos os campos para salvar.');
+      Toast.show({
+        type: 'error',
+        text1: 'Campos Incompletos',
+        text2: 'Por favor, preencha todos os campos.'
+      });
       return;
     }
     addClient({
@@ -27,6 +32,13 @@ const NewClientScreen = () => {
       date,
       statusInicial,
     });
+
+    Toast.show({
+      type: 'success',
+      text1: 'Cliente Salvo!',
+      text2: `${nome} foi adicionado à sua lista.`
+    });
+
     router.back();
   };
 

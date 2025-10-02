@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ClientsProvider } from "../src/context/ClientContext";
+import Toast from 'react-native-toast-message';
 
 export default function RootLayout() {
   return (
@@ -32,6 +33,7 @@ export default function RootLayout() {
         />
       </Stack>
     </SafeAreaProvider>
+    <Toast topOffset={60}/>
     </ClientsProvider>
   );
 }
