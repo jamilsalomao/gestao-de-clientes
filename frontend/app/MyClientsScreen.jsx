@@ -35,20 +35,25 @@ const MyClientsScreen = () => {
   }, [clients]);
 
   const filteredClients = useMemo(() => {
-    const clientsByTab = clients.filter((client) =>
-      activeTab === "ativos"
-        ? client.status === "ativo"
-        : client.status === "concluido"
+    const parseDate = (dateString) => {
+      const [day, month, year] = dateString.split('/');
+      return new Date(year, month - 1, day);
+    };
+    const sortedClients = [...clients].sort((a, b) => {
+      const dateA = parseDate(a.data);
+      const dateB = parseDate(b.data);
+      return dateB - dateA; 
+    });
+    const clientsByTab = sortedClients.filter(client =>
+      activeTab === 'ativos' ? client.status === 'ativo' : client.status === 'concluido'
     );
-
     if (!searchQuery) {
       return clientsByTab;
     }
-
-    return clientsByTab.filter((client) =>
+    return clientsByTab.filter(client =>
       client.nome.toLowerCase().includes(searchQuery.toLowerCase())
     );
-  }, [clients, activeTab, searchQuery]);
+  }, [clients, activeTab, searchQuery]); 
 
   const handleOpenModal = (client) => {
     setSelectedClientId(client);

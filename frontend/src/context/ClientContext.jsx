@@ -33,7 +33,7 @@ const DADOS_EXEMPLO_INICIAL = [
     status: "concluido",
     data: "10/08/2025",
     timeline: [
-        { date: '28 de Agosto, 2025', description: 'Projeto Finalizado com sucesso' },
+        { date: '28 de Agosto, 2025', description: 'Finalizado com sucesso' },
         { date: '18 de Agosto, 2025', description: 'Projeto enviado para aprovação' },
         { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
         { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
@@ -59,7 +59,7 @@ const DADOS_EXEMPLO_INICIAL = [
     status: "concluido",
     data: "05/08/2025",
     timeline: [
-        { date: '26 de Agosto, 2025', description: 'Projeto Finalizado com sucesso' },
+        { date: '26 de Agosto, 2025', description: 'Finalizado com sucesso' },
         { date: '18 de Agosto, 2025', description: 'Projeto enviado para aprovação' },
         { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
         { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
