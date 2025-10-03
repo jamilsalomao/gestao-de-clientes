@@ -135,8 +135,19 @@ export const ClientsProvider = ({ children }) => {
     );
   };
 
+  const updateClientDetails = (clientId, updatedData) => {
+    setClients(currentClients =>
+      currentClients.map(client => {
+        if (client.id === clientId) {
+          return { ...client, ...updatedData };
+        }
+        return client;
+      })
+    );
+  };
+
   return (
-    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted, addClient, deleteClient }}>
+    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted, addClient, deleteClient, updateClientDetails }}>
       {children}
     </ClientsContext.Provider>
   );
