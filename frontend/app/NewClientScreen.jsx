@@ -108,10 +108,10 @@ const NewClientScreen = () => {
                 display="inline"
                 themeVariant="light"
                 locale="pt-BR"
+                accentColor="#0E2C40"
                 value={tempDate}
                 onChange={onChangeDate}
                 style={styles.iosPicker}
-                textColor="#000"
               />
               <View style={styles.iosModalButtons}>
                 <TouchableOpacity
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   iosButtonConfirm: {
-    backgroundColor: '#B84500',
+    backgroundColor: '#0E2C40',
   },
   iosButtonText: {
     color: '#1F2937',
