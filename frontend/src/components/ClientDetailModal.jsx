@@ -9,7 +9,7 @@ import {
   Alert,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { useClients } from "../../src/context/ClientContext";
+import { useClients } from "../context/ClientContext";
 import Timeline from "./Timeline";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Toast from 'react-native-toast-message';

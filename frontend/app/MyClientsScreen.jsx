@@ -12,7 +12,7 @@ import { Stack, useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useClients } from "../src/context/ClientContext";
-import ClientDetailModal from "../src/components/Modal";
+import ClientDetailModal from "../src/components/ClientDetailModal";
 import SimpleBarChart from "../src/components/SimpleBarChart";
 import * as Haptics from "expo-haptics";
 
