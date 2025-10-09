@@ -8,14 +8,8 @@ const ClientManagerScreen = () => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F3F4F6" />
       <View style={styles.card}>
-        {/* <MaterialCommunityIcons
-          name="format-list-checks"
-          size={75}
-          color="#6366F1"
-        /> */}
-
         <Image
-        source={require('../../assets/FenixLogo.png')}
+        source={require('../assets/FenixLogo.png')}
         style={{ width: 200, height: 200,}}
         />
 

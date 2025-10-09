@@ -1,3 +1,3 @@
-import ClientManagerScreen from '../src/components/ClientManagerScreen';
+import ClientManagerScreen from './ClientManagerScreen';
 
 export default ClientManagerScreen;
