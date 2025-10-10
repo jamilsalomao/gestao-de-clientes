@@ -7,6 +7,7 @@ import {
   FlatList,
   StatusBar,
   TextInput,
+  ActivityIndicator,
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -18,7 +19,7 @@ import * as Haptics from "expo-haptics";
 
 const MyClientsScreen = () => {
   const router = useRouter();
-  const { clients } = useClients();
+  const { clients, loading } = useClients();
   const [activeTab, setActiveTab] = useState("ativos");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState(null);
@@ -140,6 +141,15 @@ const MyClientsScreen = () => {
     );
   };
 
+  if (loading) {
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#4F46E5" />
+        <Text style={styles.loadingText}>Carregando clientes...</Text>
+      </SafeAreaView>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Screen
@@ -255,6 +265,17 @@ const MyClientsScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F9FAFB',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#6B7280',
+  },
   container: { flex: 1, backgroundColor: "#F9FAFB" },
   tabsContainer: {
     flexDirection: "row",
