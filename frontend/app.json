@@ -5,25 +5,30 @@
     "slug": "gestao-de-clientes",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/FenixIcon.jpeg",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.fenix.gestordeclientes"
+      "bundleIdentifier": "com.fenix.gestordeclientes",
+      "splash": {
+      "image": "./assets/FenixLogo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/FenixIcon.jpeg",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.fenix.gestordeclientes"
+      "package": "com.fenix.gestordeclientes",
+      "splash": {                 
+        "image": "./assets/FenixLogo.png", 
+        "resizeMode": "contain",
+        "backgroundColor": "#ffffff"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
