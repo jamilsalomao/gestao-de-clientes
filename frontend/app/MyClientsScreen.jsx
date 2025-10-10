@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   StatusBar,
   TextInput,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
 import { Stack, useRouter } from "expo-router";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -24,6 +25,7 @@ const MyClientsScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedClientId, setSelectedClientId] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const { ativos, concluidos, total } = useMemo(() => {
     const ativosCount = clients.filter((c) => c.status === "ativo").length;
@@ -62,6 +64,14 @@ const MyClientsScreen = () => {
       client.nome.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }, [clients, activeTab, searchQuery]);
+
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true); 
+    
+    setTimeout(() => {
+      setIsRefreshing(false); 
+    }, 1000);
+  }, []);
 
   const handleOpenModal = (clientId) => {
     setSelectedClientId(clientId);
@@ -259,6 +269,14 @@ const MyClientsScreen = () => {
           </>
         }
         contentContainerStyle={{ flexGrow: 1 }}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+            tintColor="#0E2C40" 
+            colors={['#0E2C40']} 
+          />
+        }
       />
     </SafeAreaView>
   );
