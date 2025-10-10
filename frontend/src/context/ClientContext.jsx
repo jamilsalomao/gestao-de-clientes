@@ -1,158 +1,101 @@
-import { createContext, useState, useContext } from 'react';
-
-const DADOS_EXEMPLO_INICIAL = [
-  { 
-      id: '1', 
-      nome: 'Google', 
-      servico: 'Reforma na sede da empresa', 
-      status: 'ativo', 
-      data: '17/08/2025', 
-      timeline: [
-        { date: '18 de Agosto, 2025', description: 'Reforma iniciada' },
-        { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
-        { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
-      ]
-    },
-  {
-    id: "2",
-    nome: "Carlos Souza",
-    servico: "Instalação Elétrica",
-    status: "ativo",
-    data: "16/08/2025",
-    timeline: [
-        { date: '20 de Agosto, 2025', description: 'Início das instalações' },
-        { date: '18 de Agosto, 2025', description: 'Projeto enviado para aprovação' },
-        { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
-        { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
-      ]
-  },
-  {
-    id: "3",
-    nome: "Ana Costa",
-    servico: "Pintura de Fachada",
-    status: "concluido",
-    data: "10/08/2025",
-    timeline: [
-        { date: '28 de Agosto, 2025', description: 'Finalizado com sucesso' },
-        { date: '18 de Agosto, 2025', description: 'Projeto enviado para aprovação' },
-        { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
-        { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
-      ]
-  },
-  {
-    id: "4",
-    nome: "Padaria Agua Doce",
-    servico: "Marcenaria Completa",
-    status: "ativo",
-    data: "15/08/2025",
-    timeline: [
-        { date: '24 de Agosto, 2025', description: 'Início do corte dos móveis' },
-        { date: '18 de Agosto, 2025', description: 'Projeto enviado para aprovação' },
-        { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
-        { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
-      ]
-  },
-  {
-    id: "5",
-    nome: "Juliana Lima",
-    servico: "Consultoria de Design",
-    status: "concluido",
-    data: "05/08/2025",
-    timeline: [
-        { date: '26 de Agosto, 2025', description: 'Finalizado com sucesso' },
-        { date: '18 de Agosto, 2025', description: 'Projeto enviado para aprovação' },
-        { date: '16 de Agosto, 2025', description: 'Desenho do projeto iniciado' },
-        { date: '15 de Agosto, 2025', description: 'Visita realizada para medição' },
-      ]
-  },
-];
-
+import { createContext, useState, useContext, useEffect } from 'react';
+import { db } from '../firebase/firebaseConfig';
+import { collection, onSnapshot, addDoc, doc, updateDoc, deleteDoc, query, orderBy } from 'firebase/firestore';
 
 const ClientsContext = createContext();
+export const useClients = () => useContext(ClientsContext);
 
 export const ClientsProvider = ({ children }) => {
-  const [clients, setClients] = useState(DADOS_EXEMPLO_INICIAL);
+  const [clients, setClients] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    const addClient = (newClientData) => {
+  useEffect(() => {
+    const q = query(collection(db, 'clients'), orderBy('timestamp', 'desc'));
+
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const clientsData = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        timestamp: doc.data().timestamp ? doc.data().timestamp.toDate() : new Date(),
+      }));
+      setClients(clientsData);
+      setLoading(false);
+    });
+
+    return () => unsubscribe(); 
+  }, []);
+
+  const addClient = async (newClientData) => {
     const selectedDate = newClientData.date;
-    const formattedCardDate = selectedDate.toLocaleDateString('pt-BR'); 
-    const formattedTimelineDate = selectedDate.toLocaleDateString('pt-BR', { 
-      day: 'numeric', month: 'long', year: 'numeric' 
-    }); 
-
-    const newClient = {
-      id: Math.random().toString(36).substr(2, 9),
+    await addDoc(collection(db, 'clients'), {
       nome: newClientData.nome,
       servico: newClientData.servico,
       status: 'ativo',
-      data: formattedCardDate, 
+      data: selectedDate.toLocaleDateString('pt-BR'),
+      timestamp: selectedDate, 
       timeline: [
         {
-          date: formattedTimelineDate, 
+          date: selectedDate.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }),
           description: newClientData.statusInicial,
-          icon: 'flag-checkered', 
+          icon: 'flag-checkered',
         },
       ],
-    };
-
-    setClients(currentClients => [newClient, ...currentClients]);
+    });
   };
-
-  const getClientById = (id) => {
-    return clients.find(client => client.id === id);
-  };
-
-  const addTimelineUpdate = (clientId, newUpdateDescription) => {
+  
+  const addTimelineUpdate = async (clientId, newUpdateDescription) => {
     const today = new Date();
-    const formattedDate = today.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' });
-    
-    setClients(currentClients =>
-      currentClients.map(client => {
-        if (client.id === clientId) {
-          const newTimeline = [{ date: formattedDate, description: newUpdateDescription }, ...client.timeline];
-          return { ...client, timeline: newTimeline, data: today.toLocaleDateString('pt-BR') };
-        }
-        return client;
-      })
-    );
+    const clientRef = doc(db, 'clients', clientId);
+    const currentClient = clients.find(c => c.id === clientId);
+    const newTimeline = [
+      {
+        date: today.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }),
+        description: newUpdateDescription,
+      },
+      ...currentClient.timeline,
+    ];
+
+    await updateDoc(clientRef, {
+      timeline: newTimeline,
+      data: today.toLocaleDateString('pt-BR'),
+      timestamp: today,
+    });
   };
 
-  const markAsCompleted = (clientId) => {
-    setClients(currentClients =>
-      currentClients.map(client => {
-        if (client.id === clientId) {
-          const newTimeline = [{ date: client.timeline[0].date, description: 'Finalizado com sucesso' }, ...client.timeline];
-          return { ...client, status: 'concluido', timeline: newTimeline };
-        }
-        return client;
-      })
-    );
+const markAsCompleted = async (clientId) => {
+    const today = new Date();
+    const clientRef = doc(db, 'clients', clientId);
+    const currentClient = clients.find(c => c.id === clientId);
+    if (!currentClient) return; 
+    const completionUpdate = {
+      date: today.toLocaleDateString('pt-BR', { day: 'numeric', month: 'long', year: 'numeric' }),
+      description: 'Serviço concluído',
+      icon: 'check-all' 
+    };
+    const newTimeline = [completionUpdate, ...currentClient.timeline];
+
+    await updateDoc(clientRef, {
+      status: 'concluido',
+      timeline: newTimeline, 
+      data: today.toLocaleDateString('pt-BR'), 
+      timestamp: today, 
+    });
   };
 
-    const deleteClient = (clientId) => {
-    setClients(currentClients =>
-      currentClients.filter(client => client.id !== clientId)
-    );
+  const deleteClient = async (clientId) => {
+    await deleteDoc(doc(db, 'clients', clientId));
   };
-
-  const updateClientDetails = (clientId, updatedData) => {
-    setClients(currentClients =>
-      currentClients.map(client => {
-        if (client.id === clientId) {
-          return { ...client, ...updatedData };
-        }
-        return client;
-      })
-    );
+  
+  const updateClientDetails = async (clientId, updatedData) => {
+    const clientRef = doc(db, 'clients', clientId);
+    await updateDoc(clientRef, updatedData);
   };
+  
+  const getClientById = (id) => clients.find(client => client.id === id);
 
   return (
-    <ClientsContext.Provider value={{ clients, getClientById, addTimelineUpdate, markAsCompleted, addClient, deleteClient, updateClientDetails }}>
+    <ClientsContext.Provider value={{ clients, loading, addClient, getClientById, addTimelineUpdate, markAsCompleted, deleteClient, updateClientDetails }}>
       {children}
     </ClientsContext.Provider>
   );
-};
-
-export const useClients = () => {
-  return useContext(ClientsContext);
 };
